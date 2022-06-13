@@ -4,7 +4,7 @@ const HomePage = () => {
   return (
     <Container
       maxWidth={false}
-      sx={{ backgroundColor: '#2363eb', height: '100vh', pt: '5rem' }}
+      sx={{ backgroundColor: '#2363eb', minHeight: '100vh', pt: '5rem' }}
     >
       <Box
         maxWidth='md'
