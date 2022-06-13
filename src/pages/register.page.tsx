@@ -66,8 +66,6 @@ const RegisterPage = () => {
     formState: { isSubmitSuccessful },
   } = methods;
 
-  console.log(isLoading);
-
   useEffect(() => {
     if (isSuccess) {
       toast.success(data?.message);

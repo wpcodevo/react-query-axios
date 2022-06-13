@@ -1,5 +1,5 @@
 import { Box, Container, Typography } from '@mui/material';
-import { useStateContext } from '../context/context';
+import { useStateContext } from '../context';
 
 const ProfilePage = () => {
   const stateContext = useStateContext();

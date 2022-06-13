@@ -10,7 +10,7 @@ import { LoadingButton as _LoadingButton } from '@mui/lab';
 import { toast } from 'react-toastify';
 import { useMutation, useQuery } from 'react-query';
 import { getMeFn, loginUserFn } from '../api/authApi';
-import { useStateContext } from '../context/context';
+import { useStateContext } from '../context';
 
 const LoadingButton = styled(_LoadingButton)`
   padding: 0.6rem 0;

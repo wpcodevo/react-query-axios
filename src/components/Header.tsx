@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { LoadingButton as _LoadingButton } from '@mui/lab';
-import { useStateContext } from '../context/context';
+import { useStateContext } from '../context';
 import { useMutation } from 'react-query';
 import { logoutUserFn } from '../api/authApi';
 

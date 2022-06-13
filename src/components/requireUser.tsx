@@ -2,7 +2,7 @@ import { useCookies } from 'react-cookie';
 import { useQuery } from 'react-query';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { getMeFn } from '../api/authApi';
-import { useStateContext } from '../context/context';
+import { useStateContext } from '../context';
 import FullScreenLoader from './FullScreenLoader';
 
 const RequireUser = ({ allowedRoles }: { allowedRoles: string[] }) => {
