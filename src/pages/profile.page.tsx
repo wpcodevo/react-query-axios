@@ -7,15 +7,23 @@ const ProfilePage = () => {
   const user = stateContext.state.authUser;
 
   return (
-    <Container maxWidth='lg'>
+    <Container
+      maxWidth={false}
+      sx={{
+        backgroundColor: '#2363eb',
+        minHeight: '100vh',
+      }}
+    >
       <Box
+        maxWidth='lg'
         sx={{
           backgroundColor: '#ece9e9',
-          mt: '2rem',
-          height: '15rem',
+          maxHeight: '20rem',
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'center',
+          p: '2rem',
+          mx: 'auto',
         }}
       >
         <Typography
@@ -25,20 +33,20 @@ const ProfilePage = () => {
         >
           Profile Page
         </Typography>
-      </Box>
-      <Box sx={{ mt: 2 }}>
-        <Typography gutterBottom>
-          <strong>Id:</strong> {user?.id}
-        </Typography>
-        <Typography gutterBottom>
-          <strong>Full Name:</strong> {user?.name}
-        </Typography>
-        <Typography gutterBottom>
-          <strong>Email Address:</strong> {user?.email}
-        </Typography>
-        <Typography gutterBottom>
-          <strong>Role:</strong> {user?.role}
-        </Typography>
+        <Box sx={{ mt: 2 }}>
+          <Typography gutterBottom>
+            <strong>Id:</strong> {user?.id}
+          </Typography>
+          <Typography gutterBottom>
+            <strong>Full Name:</strong> {user?.name}
+          </Typography>
+          <Typography gutterBottom>
+            <strong>Email Address:</strong> {user?.email}
+          </Typography>
+          <Typography gutterBottom>
+            <strong>Role:</strong> {user?.role}
+          </Typography>
+        </Box>
       </Box>
     </Container>
   );

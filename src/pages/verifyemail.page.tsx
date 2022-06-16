@@ -37,15 +37,27 @@ const EmailVerificationPage = () => {
   });
 
   // 👇 API Login Mutation
-  const {
-    mutate: verifyEmail,
-    isLoading,
-    isError,
-    error,
-    isSuccess,
-    data,
-  } = useMutation((verificationCode: string) =>
-    verifyEmailFn(verificationCode)
+  const { mutate: verifyEmail, isLoading } = useMutation(
+    (verificationCode: string) => verifyEmailFn(verificationCode),
+    {
+      onSuccess: (data) => {
+        toast.success(data?.message);
+        navigate('/login');
+      },
+      onError(error: any) {
+        if (Array.isArray((error as any).data.error)) {
+          (error as any).data.error.forEach((el: any) =>
+            toast.error(el.message, {
+              position: 'top-right',
+            })
+          );
+        } else {
+          toast.error((error as any).data.message, {
+            position: 'top-right',
+          });
+        }
+      },
+    }
   );
 
   const navigate = useNavigate();
@@ -55,27 +67,6 @@ const EmailVerificationPage = () => {
     handleSubmit,
     formState: { isSubmitSuccessful },
   } = methods;
-
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success(data?.message);
-      navigate('/login');
-    }
-    if (isError) {
-      if (Array.isArray((error as any).data.error)) {
-        (error as any).data.error.forEach((el: any) =>
-          toast.error(el.message, {
-            position: 'top-right',
-          })
-        );
-      } else {
-        toast.error((error as any).data.message, {
-          position: 'top-right',
-        });
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading]);
 
   useEffect(() => {
     if (isSubmitSuccessful) {

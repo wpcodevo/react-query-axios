@@ -6,6 +6,7 @@ import { QueryClientProvider, QueryClient } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { StateContextProvider } from './context';
 import { BrowserRouter as Router } from 'react-router-dom';
+import AuthMiddleware from './middleware/AuthMiddleware';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,7 +24,9 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <Router>
         <StateContextProvider>
-          <App />
+          <AuthMiddleware>
+            <App />
+          </AuthMiddleware>
         </StateContextProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </Router>

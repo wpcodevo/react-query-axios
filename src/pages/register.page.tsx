@@ -49,44 +49,41 @@ const registerSchema = object({
 export type RegisterInput = TypeOf<typeof registerSchema>;
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
+
   const methods = useForm<RegisterInput>({
     resolver: zodResolver(registerSchema),
   });
 
   // 👇 Calling the Register Mutation
-  const { mutate, isLoading, isSuccess, error, isError, data } = useMutation(
-    (userData: RegisterInput) => signUpUserFn(userData)
+  const { mutate, isLoading } = useMutation(
+    (userData: RegisterInput) => signUpUserFn(userData),
+    {
+      onSuccess(data) {
+        toast.success(data?.message);
+        navigate('/verifyemail');
+      },
+      onError(error: any) {
+        if (Array.isArray((error as any).response.data.error)) {
+          (error as any).response.data.error.forEach((el: any) =>
+            toast.error(el.message, {
+              position: 'top-right',
+            })
+          );
+        } else {
+          toast.error((error as any).response.data.message, {
+            position: 'top-right',
+          });
+        }
+      },
+    }
   );
-
-  const navigate = useNavigate();
 
   const {
     reset,
     handleSubmit,
     formState: { isSubmitSuccessful },
   } = methods;
-
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success(data?.message);
-      navigate('/verifyemail');
-    }
-
-    if (isError) {
-      if (Array.isArray((error as any).response.data.error)) {
-        (error as any).response.data.error.forEach((el: any) =>
-          toast.error(el.message, {
-            position: 'top-right',
-          })
-        );
-      } else {
-        toast.error((error as any).response.data.message, {
-          position: 'top-right',
-        });
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading]);
 
   useEffect(() => {
     if (isSubmitSuccessful) {

@@ -5,7 +5,7 @@ import { GenericResponse, ILoginResponse, IUserResponse } from './types';
 
 const BASE_URL = 'http://localhost:8000/api/';
 
-const authApi = axios.create({
+export const authApi = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
 });
@@ -28,6 +28,9 @@ authApi.interceptors.response.use(
       originalRequest._retry = true;
       await refreshAccessTokenFn();
       return authApi(originalRequest);
+    }
+    if (error.response.data.message.includes('not refresh')) {
+      document.location.href = '/login';
     }
     return Promise.reject(error);
   }

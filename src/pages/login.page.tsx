@@ -45,6 +45,11 @@ const loginSchema = object({
 export type LoginInput = TypeOf<typeof loginSchema>;
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = ((location.state as any)?.from.pathname as string) || '/';
+
   const methods = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
   });
@@ -62,49 +67,35 @@ const LoginPage = () => {
   });
 
   //  API Login Mutation
-  const {
-    mutate: loginUser,
-    isLoading,
-    isError,
-    error,
-    isSuccess,
-  } = useMutation((userData: LoginInput) => loginUserFn(userData), {
-    onSuccess: () => {
-      query.refetch();
-    },
-  });
-
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const from = ((location.state as any)?.from.pathname as string) || '/profile';
+  const { mutate: loginUser, isLoading } = useMutation(
+    (userData: LoginInput) => loginUserFn(userData),
+    {
+      onSuccess: () => {
+        query.refetch();
+        toast.success('You successfully logged in');
+        navigate(from);
+      },
+      onError: (error: any) => {
+        if (Array.isArray((error as any).response.data.error)) {
+          (error as any).response.data.error.forEach((el: any) =>
+            toast.error(el.message, {
+              position: 'top-right',
+            })
+          );
+        } else {
+          toast.error((error as any).response.data.message, {
+            position: 'top-right',
+          });
+        }
+      },
+    }
+  );
 
   const {
     reset,
     handleSubmit,
     formState: { isSubmitSuccessful },
   } = methods;
-
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success('You successfully logged in');
-      navigate(from);
-    }
-    if (isError) {
-      if (Array.isArray((error as any).response.data.error)) {
-        (error as any).response.data.error.forEach((el: any) =>
-          toast.error(el.message, {
-            position: 'top-right',
-          })
-        );
-      } else {
-        toast.error((error as any).response.data.message, {
-          position: 'top-right',
-        });
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading]);
 
   useEffect(() => {
     if (isSubmitSuccessful) {

@@ -12,6 +12,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 const Input = styled(_Input)`
   background-color: white;
   padding: 0.4rem 0.7rem;
+  margin-bottom: 0.5rem;
 `;
 
 type IFormInputProps = {
