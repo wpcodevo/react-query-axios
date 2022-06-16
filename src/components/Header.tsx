@@ -1,14 +1,11 @@
 import { AppBar, Box, Container, Toolbar, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { LoadingButton as _LoadingButton } from '@mui/lab';
 import { useStateContext } from '../context';
 import { useMutation } from 'react-query';
 import { logoutUserFn } from '../api/authApi';
-import CreatePost from './post/create-post';
-import PostModal from './modals/post.modal';
 
 const LoadingButton = styled(_LoadingButton)`
   padding: 0.4rem;
@@ -21,7 +18,6 @@ const LoadingButton = styled(_LoadingButton)`
 `;
 
 const Header = () => {
-  const [openPostModal, setOpenPostModal] = useState(false);
   const navigate = useNavigate();
   const stateContext = useStateContext();
   const user = stateContext.state.authUser;
@@ -89,29 +85,12 @@ const Header = () => {
                   <LoadingButton onClick={onLogoutHandler} loading={isLoading}>
                     Logout
                   </LoadingButton>
-                  <LoadingButton onClick={() => setOpenPostModal(true)}>
-                    Create Post
-                  </LoadingButton>
                 </>
-              )}
-              {user && user?.role === 'admin' && (
-                <LoadingButton
-                  sx={{ ml: 2 }}
-                  onClick={() => navigate('/admin')}
-                >
-                  Admin
-                </LoadingButton>
               )}
             </Box>
           </Toolbar>
         </Container>
       </AppBar>
-      <PostModal
-        openPostModal={openPostModal}
-        setOpenPostModal={setOpenPostModal}
-      >
-        <CreatePost setOpenPostModal={setOpenPostModal} />
-      </PostModal>
     </>
   );
 };
