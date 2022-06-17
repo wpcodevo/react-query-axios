@@ -75,7 +75,9 @@ const PostItem: FC<IPostItemProps> = ({ post }) => {
               component='div'
               sx={{ color: '#4d4d4d', fontWeight: 'bold' }}
             >
-              {post.title}
+              {post.title.length > 20
+                ? `${post.title.substring(0, 20)}...`
+                : post.title}
             </Typography>
             <Box display='flex' alignItems='center' sx={{ mt: '1rem' }}>
               <Typography

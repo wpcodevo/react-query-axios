@@ -1,5 +1,4 @@
 import { Box, Container, Grid } from '@mui/material';
-import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
 import { getAllPostsFn } from '../api/postApi';
@@ -8,17 +7,9 @@ import PostItem from '../components/post/post.component';
 import Message from '../components/Message';
 
 const HomePage = () => {
-  const {
-    isLoading,
-    isError,
-    error,
-    data: posts,
-  } = useQuery('posts', () => getAllPostsFn(), {
+  const { isLoading, data: posts } = useQuery('posts', () => getAllPostsFn(), {
     select: (data) => data.data.posts,
-  });
-
-  useEffect(() => {
-    if (isError) {
+    onError: (error) => {
       if (Array.isArray((error as any).data.error)) {
         (error as any).data.error.forEach((el: any) =>
           toast.error(el.message, {
@@ -30,9 +21,8 @@ const HomePage = () => {
           position: 'top-right',
         });
       }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading]);
+    },
+  });
 
   if (isLoading) {
     return <FullScreenLoader />;

@@ -11,7 +11,7 @@ import AuthMiddleware from './middleware/AuthMiddleware';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 1000,
+      staleTime: 10 * 1000,
     },
   },
 });
