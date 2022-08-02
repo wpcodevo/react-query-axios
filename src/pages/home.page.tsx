@@ -1,5 +1,5 @@
 import { Box, Container, Grid } from '@mui/material';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { getAllPostsFn } from '../api/postApi';
 import FullScreenLoader from '../components/FullScreenLoader';
@@ -7,22 +7,26 @@ import PostItem from '../components/post/post.component';
 import Message from '../components/Message';
 
 const HomePage = () => {
-  const { isLoading, data: posts } = useQuery('posts', () => getAllPostsFn(), {
-    select: (data) => data.data.posts,
-    onError: (error) => {
-      if (Array.isArray((error as any).data.error)) {
-        (error as any).data.error.forEach((el: any) =>
-          toast.error(el.message, {
+  const { isLoading, data: posts } = useQuery(
+    ['posts'],
+    () => getAllPostsFn(),
+    {
+      select: (data) => data.data.posts,
+      onError: (error) => {
+        if (Array.isArray((error as any).data.error)) {
+          (error as any).data.error.forEach((el: any) =>
+            toast.error(el.message, {
+              position: 'top-right',
+            })
+          );
+        } else {
+          toast.error((error as any).data.message, {
             position: 'top-right',
-          })
-        );
-      } else {
-        toast.error((error as any).data.message, {
-          position: 'top-right',
-        });
-      }
-    },
-  });
+          });
+        }
+      },
+    }
+  );
 
   if (isLoading) {
     return <FullScreenLoader />;

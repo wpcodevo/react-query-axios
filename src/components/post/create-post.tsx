@@ -17,7 +17,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { LoadingButton } from '@mui/lab';
 import { FC, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createPostFn } from '../../api/postApi';
 import FileUpLoader from '../FileUpLoader';
 
@@ -40,7 +40,7 @@ const CreatePost: FC<ICreatePostProp> = ({ setOpenPostModal }) => {
     (post: FormData) => createPostFn(post),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries('posts');
+        queryClient.invalidateQueries(['posts']);
         toast.success('Post created successfully');
         setOpenPostModal(false);
       },

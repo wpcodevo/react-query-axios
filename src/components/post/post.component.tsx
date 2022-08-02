@@ -17,7 +17,7 @@ import { toast } from 'react-toastify';
 import UpdatePost from './update-post';
 import { format, parseISO } from 'date-fns';
 import './post.styles.scss';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deletePostFn } from '../../api/postApi';
 import { IPostResponse } from '../../api/types';
 
@@ -33,7 +33,7 @@ const PostItem: FC<IPostItemProps> = ({ post }) => {
 
   const { mutate: deletePost } = useMutation((id: string) => deletePostFn(id), {
     onSuccess(data) {
-      queryClient.invalidateQueries('posts');
+      queryClient.invalidateQueries(['posts']);
       toast.success('Post deleted successfully');
     },
     onError(error: any) {

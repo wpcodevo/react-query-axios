@@ -1,5 +1,5 @@
 import { useCookies } from 'react-cookie';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getMeFn } from '../api/authApi';
 import { useStateContext } from '../context';
 import FullScreenLoader from '../components/FullScreenLoader';

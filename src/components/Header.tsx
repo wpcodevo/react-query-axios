@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { LoadingButton as _LoadingButton } from '@mui/lab';
 import { useStateContext } from '../context';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { logoutUserFn } from '../api/authApi';
 import CreatePost from './post/create-post';
 import PostModal from './modals/post.modal';

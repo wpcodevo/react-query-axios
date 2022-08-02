@@ -17,7 +17,7 @@ import { LoadingButton } from '@mui/lab';
 import { FC, useEffect } from 'react';
 import { pickBy } from 'lodash';
 import { toast } from 'react-toastify';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updatePostFn } from '../../api/postApi';
 import { IPostResponse } from '../../api/types';
 import FileUpLoader from '../FileUpLoader';
@@ -43,7 +43,7 @@ const UpdatePost: FC<IUpdatePostProp> = ({ setOpenPostModal, post }) => {
       updatePostFn({ id, formData }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries('posts');
+        queryClient.invalidateQueries(['posts']);
         toast.success('Post updated successfully');
         setOpenPostModal(false);
       },

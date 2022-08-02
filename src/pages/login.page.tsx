@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LoadingButton as _LoadingButton } from '@mui/lab';
 import { toast } from 'react-toastify';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { getMeFn, loginUserFn } from '../api/authApi';
 import { useStateContext } from '../context';
 
@@ -57,7 +57,7 @@ const LoginPage = () => {
   const stateContext = useStateContext();
 
   // API Get Current Logged-in user
-  const query = useQuery('authUser', getMeFn, {
+  const query = useQuery(['authUser'], getMeFn, {
     enabled: false,
     select: (data) => data.data.user,
     retry: 1,

@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { LoadingButton as _LoadingButton } from '@mui/lab';
 import { toast } from 'react-toastify';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { verifyEmailFn } from '../api/authApi';
 
 const LoadingButton = styled(_LoadingButton)`
