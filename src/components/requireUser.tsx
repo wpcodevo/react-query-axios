@@ -1,5 +1,5 @@
 import { useCookies } from 'react-cookie';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { getMeFn } from '../api/authApi';
 import { useStateContext } from '../context';
@@ -14,7 +14,7 @@ const RequireUser = ({ allowedRoles }: { allowedRoles: string[] }) => {
     isLoading,
     isFetching,
     data: user,
-  } = useQuery('authUser', getMeFn, {
+  } = useQuery(['authUser'], getMeFn, {
     retry: 1,
     select: (data) => data.data.user,
     onSuccess: (data) => {
