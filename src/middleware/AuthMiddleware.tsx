@@ -21,7 +21,7 @@ const AuthMiddleware: React.FC<AuthMiddlewareProps> = ({ children }) => {
     },
   });
 
-  if (query.isLoading) {
+  if (query.isLoading && cookies.logged_in) {
     return <FullScreenLoader />;
   }
 
