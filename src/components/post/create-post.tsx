@@ -27,7 +27,7 @@ interface ICreatePostProp {
 
 const createPostSchema = object({
   title: string().min(1, 'Title is required'),
-  content: string().max(50).min(1, 'Content is required'),
+  content: string().min(1, 'Content is required'),
   category: string().max(50).min(1, 'Category is required'),
   image: z.instanceof(File),
 });
